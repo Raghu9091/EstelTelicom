@@ -126,8 +126,9 @@ cd /applogs/tomcat/logs; ls -lrth
 cd /applogs/tomcat/logs ; tail -f catalina.out
 
 #### Nginx access.log ##############
-cd /var/log/nginx; ls -ltrs
-
+```
+cd /var/log/nginx; ls -lrtsh
+```
 
 
 
@@ -157,10 +158,12 @@ cd /data/outbound/rafm/voucher/new;ls -lrth
 
 ###Need to check Transaction timeout in splunk log  APP 1
 9:30
-
-Path= cd /applogs/engine/coreengine
+```
+cd /applogs/engine/coreengine
 grep -i "Failure" digi_*_splunk.log
 grep -i "Time out" digi_*_splunk.log
+
+```
 
 
 ========================================
@@ -199,6 +202,17 @@ SELECT CURRENT_DATABASE();
 
 ```
 
+
+
+## Weekly SHEET ARCHIVAL report(MIS-APP)
+
+Change the date
+```
+cd /applogs/DIGVIJAY/VMS/PROCESS;ls -lrt
+```
+```
+tail -f Archive_Table_Report_2026-02-28.csv
+```
 
 
 
