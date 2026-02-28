@@ -10,7 +10,10 @@ WHERE current_status_id = 15
 ORDER BY last_modify_date;
 ```
 (or)
+
+```
 select serial_number,current_status_id,previous_status_id,last_modify_date from vms_voucher where current_status_id = 15 order by 4;
+```
 
 
 
@@ -18,25 +21,27 @@ select serial_number,current_status_id,previous_status_id,last_modify_date from 
 ======================================================================
 --> check internet speed and web portals check working properly or not
 
-1.Voucher Generation Status (Generation Status wise count)
-2.Generation and Activation Voucher Count of VMS softpin
-3.Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
+1. Voucher Generation Status (Generation Status wise count)
+2. Generation and Activation Voucher Count of VMS softpin
+3. Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
 
 ## Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 05:30
 Web 1/2
-	df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status
+``` df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status ```
 App-1/2 -
-	df -h ; free -h ; date ;top ;coreengine -l ; VMSBatchScheduler_digi_qa status
+	``` df -h ; free -h ; date ;top ;coreengine -l ; VMSBatchScheduler_digi_qa status ```
 MIS APP-
-	df -h ;free -h ; ps -ef |grep redis ; ps -ef |grep report ; date; top
+	``` df -h ;free -h ; ps -ef |grep redis ; ps -ef |grep report ; date; top ```
 Interface 1/2  
-	df -h ; free -h  ; date; top; ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status; modengine_digi -l
+	``` df -h ; free -h  ; date; top; ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status; modengine_digi -l ```
 DB1/2-
-	df -h ; free -h ; ps -ef |grep walsender ; date ;top
+	``` df -h ; free -h ; ps -ef |grep walsender ; date ;top ```
 MISDB -
-	df -h ; free -h ;date ;top
+	``` df -h ; free -h ;date ;top ```
+	
+	
 =========================================================================================
 ### DB Replication Monitoring
 ps -ef | grep walsender
