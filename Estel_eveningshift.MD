@@ -55,7 +55,6 @@ MISDB -
 df -h ; free -h ;date ;top
 ```
 	
-	
 =========================================================================================
 # DB Replication Monitoring
 
@@ -112,10 +111,12 @@ tail -f localhost_access_log.2026-02-28.txt
 cat localhost_access_log.2026-02-28.txt |wc -l 
 #( change date )
 ```
-
-cd /applogs/tomcat/logs; ls -lrth
-tail -f localhost_access_log.2026-02-25.txt
+# int 02
+```
+cd /applogs/tomcat/log; ls -lrth
+tail -f localhost_access_log.2026-03-01.txt
 cat localhost_access_log.2026-02-25.txt |wc -l 
+```
 
 
 ###### catalina.out check to INT 01/02 ################
