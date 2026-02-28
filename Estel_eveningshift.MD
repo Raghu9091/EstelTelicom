@@ -135,7 +135,8 @@ cd /var/log/nginx; ls -ltrs
 
 select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('25/02/2026 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('25/02/2026 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >30;
 
-### below mount points check app1
+## below mount points check app1
+
 9:30 PM
 cd /data/outbound/dms/used_vouchers/new;ls -lrth
 cd /data/outbound/aep/product/new;ls -lrth
@@ -145,7 +146,10 @@ cd /data/outbound/aep/operator/new;ls -lrth
 cd /data/outbound/aep/voucher/new;ls -lrth
 cd /data/outbound/rafm/voucher/new;ls -lrth
 
-====================
+===========================================================
+
+
+ 
 
 ###Need to check Transaction timeout in splunk log  APP 1
 9:30
@@ -185,4 +189,12 @@ grep -i "Transaction_ID" *.log
 
 
 =======================
+```
+
+SELECT CURRENT_DATABASE();
+
+```
+
+
+
 
