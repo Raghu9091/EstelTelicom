@@ -27,9 +27,10 @@ select serial_number,current_status_id,previous_status_id,last_modify_date from 
 
 
 ##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
+
 05:30
 
-Web 1/2
+Web 1/2 .....
 ``` 
 df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status 
 ```
@@ -138,6 +139,7 @@ select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS 
 ## below mount points check app1
 
 9:30 PM
+```
 cd /data/outbound/dms/used_vouchers/new;ls -lrth
 cd /data/outbound/aep/product/new;ls -lrth
 cd /data/outbound/aep/status/new;ls -lrth
@@ -145,6 +147,7 @@ cd /data/outbound/aep/product_cat/new;ls -lrth
 cd /data/outbound/aep/operator/new;ls -lrth
 cd /data/outbound/aep/voucher/new;ls -lrth
 cd /data/outbound/rafm/voucher/new;ls -lrth
+```
 
 ===========================================================
 
