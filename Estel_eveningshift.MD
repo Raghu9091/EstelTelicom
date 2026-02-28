@@ -29,9 +29,14 @@ select serial_number,current_status_id,previous_status_id,last_modify_date from 
 ## Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 05:30
 Web 1/2
-``` df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status ```
+``` 
+df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status 
+```
 App-1/2 -
-	``` df -h ; free -h ; date ;top ;coreengine -l ; VMSBatchScheduler_digi_qa status ```
+``` 
+df -h ; free -h ; date ;top ;coreengine -l ; VMSBatchScheduler_digi_qa status 
+```
+
 MIS APP-
 	``` df -h ;free -h ; ps -ef |grep redis ; ps -ef |grep report ; date; top ```
 Interface 1/2  
