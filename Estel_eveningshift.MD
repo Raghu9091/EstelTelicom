@@ -62,6 +62,7 @@ df -h ; free -h ;date ;top
 ps -ef | grep walsender
 ```
 
+
 ### Check report generation/activation on below mount point (App1/App2/MISAPP)
 5:45
 ```
@@ -103,9 +104,13 @@ cd /applogs/DIGVIJAY/VMS/PROCESS;ls -lrth
 ######## localhost_access_log.2026-02-25.txt ########
 8:00-8:30
 Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
+```
 cd /applogs/tomcat/logs; ls -lrth
-tail -f localhost_access_log.2026-02-25.txt # ( change date )
-cat localhost_access_log.2026-02-25.txt |wc -l #( change date )
+tail -f localhost_access_log.2026-02-28.txt 
+# ( change date )
+cat localhost_access_log.2026-02-28.txt |wc -l 
+#( change date )
+```
 
 cd /applogs/tomcat/logs; ls -lrth
 tail -f localhost_access_log.2026-02-25.txt
@@ -148,3 +153,36 @@ cd /data/outbound/rafm/voucher/new;ls -lrth
 Path= cd /applogs/engine/coreengine
 grep -i "Failure" digi_*_splunk.log
 grep -i "Time out" digi_*_splunk.log
+
+
+========================================
+##Reconcillation (change_date)
+```
+SELECT 
+    serial_number, 
+    reference_transaction_id, 
+    recharge_date, 
+    recharge_by, 
+    trans_id, 
+    recon_result_desc, 
+    is_settled 
+FROM vms_trans_reconciliation 
+WHERE DATE(recharge_date) >= '2026-02-06' 
+ORDER BY recharge_date DESC;
+
+```
+
+* Search the below path log transaction 
+Logs Path
+1. Tomcat /applogs/tomcat/logs/
+2. Mod /applogs/engine/modengine/
+3. Core /applogs/engine/coreengine 
+
+```
+grep -i "Transaction_ID" *.log
+```
+
+
+
+=======================
+
