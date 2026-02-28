@@ -26,8 +26,9 @@ select serial_number,current_status_id,previous_status_id,last_modify_date from 
 3. Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
 
-## Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
+##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 05:30
+
 Web 1/2
 ``` 
 df -h ; free -h ; date; top ;ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status 
@@ -36,25 +37,34 @@ App-1/2 -
 ``` 
 df -h ; free -h ; date ;top ;coreengine -l ; VMSBatchScheduler_digi_qa status 
 ```
-
 MIS APP-
-	``` df -h ;free -h ; ps -ef |grep redis ; ps -ef |grep report ; date; top ```
+``` 
+df -h ;free -h ; ps -ef |grep redis ; ps -ef |grep report ; date; top
+```
 Interface 1/2  
-	``` df -h ; free -h  ; date; top; ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status; modengine_digi -l ```
+```
+df -h ; free -h  ; date; top; ps -ef |grep tomcat ; ps -ef |grep redis ; service nginx status; modengine_digi -l 
+```
 DB1/2-
-	``` df -h ; free -h ; ps -ef |grep walsender ; date ;top ```
+```
+df -h ; free -h ; ps -ef |grep walsender ; date ;top
+```
 MISDB -
-	``` df -h ; free -h ;date ;top ```
+``` 
+df -h ; free -h ;date ;top
+```
 	
 	
 =========================================================================================
-### DB Replication Monitoring
-ps -ef | grep walsender
+# DB Replication Monitoring
 
+``` 
+ps -ef | grep walsender
+```
 
 ### Check report generation/activation on below mount point (App1/App2/MISAPP)
 5:45
-
+```
 cd /data/outbound/erp/activation_response/new;ls -lrth |wc -l
 cd /data/inbound/erp/generation/new;ls -lrth
 cd /data/inbound/erp/activation/new;ls -lrth
@@ -63,7 +73,7 @@ cd /data/outbound/dms/activation_response/new;ls -lrth
 cd /data/outbound/dms/activation_response/new;ls -lrth
 cd /data/outbound/erp/generation_response/new;ls -lrth |wc -l
 
-
+```
 
 
 4.VMS batch_schedular(MIS app)
