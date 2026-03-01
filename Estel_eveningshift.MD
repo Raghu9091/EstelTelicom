@@ -148,14 +148,15 @@ Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
 
 ```
 cd /applogs/tomcat/logs; ls -lrth
-tail -f localhost_access_$(date +%F).txt
+tail -f localhost_access_log.$(date +%F).txt
 cat localhost_access_log.$(date +%F).txt |wc -l 
+
 ```
+example file (localhost_access_log.2026-03-01.txt (Date automatically Taken)
 # int 02
 ```
-cd /applogs/tomcat/log; ls -lrth
-tail -f localhost_access_log.2026-03-01.txt
-cat localhost_access_log.2026-02-25.txt |wc -l 
+cd /applogs/tomcat/log/ ; ls -lrth && tail -f localhost_access_log.$(date +%F).txt
+cat localhost_access_log.$(date +%F).txt |wc -l 
 ```
 
 
@@ -223,7 +224,17 @@ group by 1
 having count(*) >19;
 
 ```
+Please run this query for Duplicate Trasaction once the shift (Change Date) 
 
+```
+SELECT reference_transaction_id 
+FROM public.vms_transaction
+WHERE result_code = '0000'
+  AND trans_type_code = 'TOPUP'
+  AND DATE(transaction_cts) > '2025-02-16'
+GROUP BY reference_transaction_id
+HAVING COUNT(reference_transaction_id) > 1;
+```
 
 ========================================
 ##Reconcillation (change_date)
