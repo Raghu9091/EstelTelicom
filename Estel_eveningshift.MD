@@ -204,6 +204,15 @@ SELECT CURRENT_DATABASE();
 
 
 
+
+# Weekly_sheets update
+1.Archival report
+2.Reconcillation 
+3.TPS
+4.hardpin vs softpin
+5.Digicelicom evg report
+6.Transaction SLA
+
 ## Weekly SHEET ARCHIVAL report(MIS-APP)
 
 Change the date
