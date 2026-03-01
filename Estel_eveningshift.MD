@@ -66,6 +66,7 @@ GROUP BY 1, 2, 3;
 
 ##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
+
 05:30
 
 Web 1/2 .....
@@ -124,16 +125,18 @@ VMSBatchScheduler_digi_qa status
 6.Dynatrace top up controller (Symphony)
     
 	
-	
 
-
-########### Archival Report APP 1 ###
+### Archival Report MIS_APP ###
 
 ```
 cd /applogs/DIGVIJAY/VMS/PROCESS;ls -lrth
+tail -f Archive_Table_Report_$(date +%F).csv
+
 ```
-
-
+(or)
+```
+tail -f /applogs/DIGVIJAY/VMS/PROCESS/Archive_Table_Report_$(date +%F).csv
+```
 
 
 
@@ -142,12 +145,11 @@ cd /applogs/DIGVIJAY/VMS/PROCESS;ls -lrth
 ######## localhost_access_log.2026-02-25.txt ########
 8:00-8:30
 Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
+
 ```
 cd /applogs/tomcat/logs; ls -lrth
-tail -f localhost_access_log.2026-02-28.txt 
-# ( change date )
-cat localhost_access_log.2026-02-28.txt |wc -l 
-#( change date )
+tail -f localhost_access_$(date +%F).txt
+cat localhost_access_log.$(date +%F).txt |wc -l 
 ```
 # int 02
 ```
@@ -203,6 +205,25 @@ grep -i "Time out" digi_*_splunk.log
 
 ```
 
+STEP:21 
+Please run this query for Tps once the shift (Change Date) 
+```
+select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
+```
+
+
+```
+select 
+to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date,
+count(*) as TPS 
+FROM vms_transaction 
+where request_cts >= TO_TIMESTAMP('01/03/2026 00:00:00','DD/MM/YYYY HH24:MI:SS') 
+and request_cts <= TO_TIMESTAMP('01/03/2026 23:59:59','DD/MM/YYYY HH24:MI:SS')
+group by 1 
+having count(*) >19;
+
+```
+
 
 ========================================
 ##Reconcillation (change_date)
@@ -218,8 +239,43 @@ SELECT
 FROM vms_trans_reconciliation 
 WHERE DATE(recharge_date) >= '2026-02-06' 
 ORDER BY recharge_date DESC;
+```
+
+(or) date taking Automatically
 
 ```
+SELECT 
+    serial_number, 
+    reference_transaction_id, 
+    recharge_date, 
+    recharge_by, 
+    trans_id, 
+    recon_result_desc, 
+    is_settled 
+FROM vms_trans_reconciliation 
+WHERE DATE(recharge_date) >= CURRENT_DATE
+ORDER BY recharge_date DESC;
+```
+
+========================================================================================================
+
+Please run this query for Tps once the shift
+ select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
+
+
+```
+select 
+to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date,
+count(*) as TPS 
+FROM vms_transaction 
+where request_cts >= TO_TIMESTAMP('01/03/2026 00:00:00','DD/MM/YYYY HH24:MI:SS') 
+and request_cts <= TO_TIMESTAMP('01/03/2026 23:59:59','DD/MM/YYYY HH24:MI:SS')
+group by 1 
+having count(*) >19;
+
+```
+
+
 
 * Search the below path log transaction 
 Logs Path
@@ -232,21 +288,22 @@ grep -i "Transaction_ID" *.log
 ```
 
 
-
 =======================
-```
 
+# We are using PSSQL
+
+```
 SELECT CURRENT_DATABASE();
 
 ```
 
 
-
+====================================================## 9:30 ## ==========
 
 # Weekly_sheets update
-1.Archival report
+1.Archival report 
 2.Reconcillation 
-3.TPS
+3.TPS--int01/02 
 4.hardpin vs softpin
 5.Digicelicom evg report
 6.Transaction SLA
