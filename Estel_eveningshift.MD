@@ -26,6 +26,44 @@ select serial_number,current_status_id,previous_status_id,last_modify_date from 
 3. Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
 
+
+# Voucher Generation status
+```
+SELECT 
+    b.description, 
+    COUNT(*) AS total_batches, 
+    SUM(a.batch_quantity) AS Voucher_Count
+FROM vms_order_batches a
+INNER JOIN vms_status b ON a.batch_process_status = b.id
+GROUP BY b.description
+ORDER BY b.description;
+
+```
+
+
+STEP 5 : Generation and activation voucher count of VMS softpin.
+Action: Check the generation and activation voucher count for VMS softpin using the query below on MIS DB (172.27.128.7):
+
+```
+SELECT 
+    current_status_id,
+    CASE 
+        WHEN generation_method_id IN (1, 2) THEN 'VMS' 
+        WHEN generation_method_id IN (3, 4) THEN 'UVC' 
+    END AS UVC_VMS, 
+    CASE 
+        WHEN product_type_id = 5 THEN 'Hard Pin' 
+        WHEN product_type_id = 6 THEN 'Soft Pin' 
+    END AS Pin_type,
+    COUNT(*)
+FROM vms_voucher 
+WHERE current_status_id IN (10, 11) 
+  AND product_type_id = 6 
+  AND generation_method_id IN (1, 2)
+GROUP BY 1, 2, 3;
+```
+
+
 ##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
 05:30
