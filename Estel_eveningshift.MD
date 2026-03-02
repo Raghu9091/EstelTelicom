@@ -1,5 +1,5 @@
 
-#Evening Shift
+# Evening Shift
 Every 30 min check
 **  Reserve status (MIS-DB)
 3:00--10:00
@@ -15,11 +15,9 @@ ORDER BY last_modify_date;
 select serial_number,current_status_id,previous_status_id,last_modify_date from vms_voucher where current_status_id = 15 order by 4;
 ```
 
-
-
-#######
 ======================================================================
---> check internet speed and web portals check working properly or not
+** check internet speed and web portals check working properly or not
+
 
 1. Voucher Generation Status (Generation Status wise count)
 2. Generation and Activation Voucher Count of VMS softpin
@@ -37,7 +35,6 @@ FROM vms_order_batches a
 INNER JOIN vms_status b ON a.batch_process_status = b.id
 GROUP BY b.description
 ORDER BY b.description;
-
 ```
 
 
@@ -65,7 +62,7 @@ GROUP BY 1, 2, 3;
 
 
 ##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
-
+=============================================================
 
 05:30
 
@@ -112,7 +109,6 @@ cd /data/outbound/dms/batch_file/new;ls -lrth
 cd /data/outbound/dms/activation_response/new;ls -lrth
 cd /data/outbound/dms/activation_response/new;ls -lrth
 cd /data/outbound/erp/generation_response/new;ls -lrth |wc -l
-
 ```
 
 
@@ -126,25 +122,23 @@ VMSBatchScheduler_digi_qa status
     
 	
 
-### Archival Report MIS_APP ###
+## Archival Report MIS_APP 
 
 ```
 cd /applogs/DIGVIJAY/VMS/PROCESS;ls -lrth
 tail -f Archive_Table_Report_$(date +%F).csv
-
 ```
+
 (or)
+
 ```
 tail -f /applogs/DIGVIJAY/VMS/PROCESS/Archive_Table_Report_$(date +%F).csv
 ```
 
 
-
-
-
 ######## localhost_access_log.2026-02-25.txt ########
 8:00-8:30
-Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
+** Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
 
 ```
 cd /applogs/tomcat/logs; ls -lrth
@@ -183,8 +177,7 @@ cd /applogs/engine/coreengine; ls -lrth
 grep -i "Failure" digi_*_splunk.log
 grep -i "Time out" digi_*_splunk.log
 ```
-
-
+- cat digi_*_splunk_20231224_*.log| grep -i "Timed Out" ( Change date )
 
 ####Shift Once MS DB TPS
 
@@ -206,21 +199,15 @@ cd /data/outbound/rafm/voucher/new;ls -lrth
 =====================================================================
  
 
-###Need to check Transaction timeout in splunk log  APP 1
-9:30
-```
-cd /applogs/engine/coreengine
-grep -i "Failure" digi_*_splunk.log
-grep -i "Time out" digi_*_splunk.log
-```
-cat digi_*_splunk_20231224_*.log| grep -i "Timed Out" ( Change date )
-
 
 STEP:21 
 Please run this query for Tps once the shift (Change Date) 
 ```
 select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
- ```
+```
+(or)
+
+```
 select 
 to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date,
 count(*) as TPS 
@@ -229,9 +216,12 @@ where request_cts >= TO_TIMESTAMP('01/03/2026 00:00:00','DD/MM/YYYY HH24:MI:SS')
 and request_cts <= TO_TIMESTAMP('01/03/2026 23:59:59','DD/MM/YYYY HH24:MI:SS')
 group by 1 
 having count(*) >19;
-
 ```
-Please run this query for Duplicate Trasaction once the shift (Change Date) 
+### Duplicate Trasaction
+
+# Duplicate Trasaction
+
+## Please run this query for Duplicate Trasaction once the shift (Change Date) 
 
 ```
 SELECT reference_transaction_id 
@@ -277,9 +267,10 @@ ORDER BY recharge_date DESC;
 
 ========================================================================================================
 
+# Tps once the shift
+
 Please run this query for Tps once the shift
 select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
-
 
 ```
 select 
@@ -293,6 +284,7 @@ having count(*) >19;
 
 ```
 
+# log
 
 
 * Search the below path log transaction 
