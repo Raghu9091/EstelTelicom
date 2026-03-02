@@ -1,7 +1,7 @@
 
 #Evening Shift
 Every 30 min check
-##### Reserve status (MIS-DB)
+**  Reserve status (MIS-DB)
 3:00--10:00
 ```
 SELECT serial_number, current_status_id, previous_status_id, last_modify_date 
@@ -164,14 +164,25 @@ cat localhost_access_log.$(date +%F).txt |wc -l
 8:30
 Need to check topup transaction on Int tomcat int 1/2 
 cd /applogs/tomcat/logs; ls -lrth
-cd /applogs/tomcat/logs ; tail -f catalina.out
 
-#### Nginx access.log ##############
 ```
-cd /var/log/nginx; ls -lrtsh
+cd /applogs/tomcat/logs && tail -f catalina.out
 ```
 
+#### Nginx access.log ############## Web 01/02, Int 01/02
+9:00
+```
+cd /var/log/nginx; ls -lrtsh && tail -f access.log
+```
 
+## Timeout & timeout in splunk log  APP 1
+9:30
+
+```
+cd /applogs/engine/coreengine; ls -lrth
+grep -i "Failure" digi_*_splunk.log
+grep -i "Time out" digi_*_splunk.log
+```
 
 
 
@@ -192,9 +203,7 @@ cd /data/outbound/aep/voucher/new;ls -lrth
 cd /data/outbound/rafm/voucher/new;ls -lrth
 ```
 
-===========================================================
-
-
+=====================================================================
  
 
 ###Need to check Transaction timeout in splunk log  APP 1
@@ -210,10 +219,7 @@ STEP:21
 Please run this query for Tps once the shift (Change Date) 
 ```
 select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
-```
-
-
-```
+ ```
 select 
 to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date,
 count(*) as TPS 
@@ -305,19 +311,37 @@ grep -i "Transaction_ID" *.log
 
 ```
 SELECT CURRENT_DATABASE();
-
 ```
 
 
 ====================================================## 9:30 ## ==========
 
 # Weekly_sheets update
-1.Archival report 
-2.Reconcillation 
-3.TPS--int01/02 
-4.hardpin vs softpin
-5.Digicelicom evg report
-6.Transaction SLA
+
+1. Archival report 
+```
+tail -f /applogs/DIGVIJAY/VMS/PROCESS/Archive_Table_Report_$(date +%F).csv
+```
+2. Reconcillation (outlook-Mail)
+3. TPS--int01/02 
+```
+cd /applogs/tomcat/logs && ls -lrt
+grep 'Request receive in Rest Service TOPUP' catalina.out_$(date +%F) | cut -d ',' -f1 | sort | uniq -c | sort -nr | head -5
+```
+(or)
+```
+grep 'Request receive in Rest Service TOPUP' catalina.out_2026-03-02 | cut -d ',' -f1 | sort | uniq -c | sort -nr | head -5
+```
+
+4. hardpin vs softpin (MID DB)
+```
+select used_date,uvc_vms,sum(count) count 
+from (select date(recharge_date) used_date, case when generation_method_id in (1,2) then 'VMS' when generation_method_id in (3,4) then 'UVC' end UVC_VMS, count(*) from vms_voucher where current_status_id= '12' and date(recharge_date) >= '2026-02-25' group by 1, generation_method_id) group by 1,2 order by 1;
+```
+
+
+5. Digicelicom evg report
+6. Transaction SLA
 
 ## Weekly SHEET ARCHIVAL report(MIS-APP)
 
