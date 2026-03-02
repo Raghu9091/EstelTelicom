@@ -169,7 +169,7 @@ cd /applogs/tomcat/logs; ls -lrth
 cd /applogs/tomcat/logs && tail -f catalina.out
 ```
 
-#### Nginx access.log ############## Web 01/02, Int 01/02
+#Nginx access.log (Web 01/02, Int 01/02)
 9:00
 ```
 cd /var/log/nginx; ls -lrtsh && tail -f access.log
@@ -212,8 +212,9 @@ cd /data/outbound/rafm/voucher/new;ls -lrth
 cd /applogs/engine/coreengine
 grep -i "Failure" digi_*_splunk.log
 grep -i "Time out" digi_*_splunk.log
-
 ```
+cat digi_*_splunk_20231224_*.log| grep -i "Timed Out" ( Change date )
+
 
 STEP:21 
 Please run this query for Tps once the shift (Change Date) 
@@ -277,7 +278,7 @@ ORDER BY recharge_date DESC;
 ========================================================================================================
 
 Please run this query for Tps once the shift
- select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
+select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('30/12/2024 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('30/12/2024 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >19;
 
 
 ```

@@ -1,0 +1,85 @@
+Catalina.out(interface)
+
+[t1-ops-v6970@shtvvmsnvispr02 ~]$ grep UMB20260302191926900008 /applogs/tomcat/logs/catalina.out
+    "referenceTransactionId" : "UMB20260302191926900008",
+2026-03-02 19:19:26,479 [http-nio-8444-exec-1056] INFO c.e.c.BeanConfiguration :::::::::requestXml:::::::::::::::<estel><header><requestType>TOPUP</requestType></header><request><userId>1</userId><referenceTransactionId>UMB20260302191926900008</referenceTransactionId><rechargeNumberInfo>60133715294</rechargeNumberInfo><voucherNumber>823618432194315</voucherNumber><topupType>AIRTIME</topupType><channel>24</channel><comments>UMB Recharge</comments><operatorErpCode>100006000</operatorErpCode><wsRequestCts>02/03/2026 19:19:26.479</wsRequestCts><tprUserId>csg30</tprUserId><tprPwd>Y3NnMzBAMTIzNDU=</tprPwd><topUpSystem>CSG</topUpSystem><voucherSerialNumber></voucherSerialNumber></request></estel>
+2026-03-02 19:19:26,479 [http-nio-8444-exec-1056] INFO c.e.c.BeanConfiguration Request to hit..................<estel><header><requestType>TOPUP</requestType></header><request><userId>1</userId><referenceTransactionId>UMB20260302191926900008</referenceTransactionId><rechargeNumberInfo>60133715294</rechargeNumberInfo><voucherNumber>823618432194315</voucherNumber><topupType>AIRTIME</topupType><channel>24</channel><comments>UMB Recharge</comments><operatorErpCode>100006000</operatorErpCode><wsRequestCts>02/03/2026 19:19:26.479</wsRequestCts><tprUserId>csg30</tprUserId><tprPwd>Y3NnMzBAMTIzNDU=</tprPwd><topUpSystem>CSG</topUpSystem><voucherSerialNumber></voucherSerialNumber></request></estel>
+2026-03-02 19:19:26,878 [http-nio-8444-exec-1056] INFO c.e.c.BeanConfiguration Final response received from backend:<estel><header><responseType>TOPUP</responseType></header><response><resultCode>0000</resultCode><resultCodeDesc>Transaction Successful</resultCodeDesc><faceValue>10.00</faceValue><rechargeValue>10.0</rechargeValue><validity>0</validity><mainBalanceAmount>28.65</mainBalanceAmount><rechargeNumberInfo>60133715294</rechargeNumberInfo><voucherNumber>823618432194315</voucherNumber><transId>260302567574139</transId><referenceTransactionId>UMB20260302191926900008</referenceTransactionId><topupType>AIRTIME</topupType><channel>24</channel><comments>Topup Voucher Response</comments><requestcts>2026-03-02 19:19:26.485</requestcts><responsects>02/03/2026 19:19:26.871</responsects><jsonData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}]]></jsonData><topUpSystem>DTE</topUpSystem><groupCode>0</groupCode></response></estel>
+2026-03-02 19:19:26,878 [http-nio-8444-exec-1056] INFO c.e.c.BeanConfiguration Reference Transaction IdUMB20260302191926900008
+    "referenceTransactionId" : "UMB20260302191926900008",
+      "id" : "UMB20260302191926900008",
+        "id" : "UMB20260302191926900008"
+[t1-ops-v6970@shtvvmsnvispr02 ~]$ grep UMB20260302191926900008 /applogs/engine/modengine/*.log
+[t1-ops-v6970@shtvvmsnvispr02 ~]$ timed out waiting for input: auto-logout
+
+===============================================================================================================================================
+
+APP 2 logs/
+19:19:26,479---calaina data
+
+[t1-ops-v6970@shtvvmsnapppr02 coreengine]$ grep UMB20260302191926900008 *.log
+
+digi_21_core.log:2026-03-02 19:19:26,481 - INFO - |260302567571236| Going for Validating the Request using schema... <estel><header><requestType>TOPUP</requestType></header><request><userId>1</userId><referenceTransactionId>UMB20260302191926900008</referenceTransactionId><rechargeNumberInfo>60133715294</rechargeNumberInfo><voucherNumber>823618432194315</voucherNumber><topupType>AIRTIME</topupType><channel>24</channel><comments>UMB Recharge</comments><operatorErpCode>100006000</operatorErpCode><wsRequestCts>02/03/2026 19:19:26.479</wsRequestCts><tprUserId>csg30</tprUserId><tprPwd>Y3NnMzBAMTIzNDU=</tprPwd><topUpSystem>CSG</topUpSystem><voucherSerialNumber></voucherSerialNumber><requestcts>02/03/2026 19:19:26.480</requestcts></request></estel>
+
+digi_21_core.log:2026-03-02 19:19:26,485 - INFO - |260302567574139| generated request : <estel><header><requestType>TOPUP</requestType></header><request><userId>1</userId><referenceTransactionId>UMB20260302191926900008</referenceTransactionId><rechargeNumberInfo>60133715294</rechargeNumberInfo><voucherNumber>823618432194315</voucherNumber><topupType>AIRTIME</topupType><channel>24</channel><comments>UMB Recharge</comments><operatorErpCode>100006000</operatorErpCode><wsRequestCts>02/03/2026 19:19:26.479</wsRequestCts><tprUserId>csg30</tprUserId><tprPwd>Y3NnMzBAMTIzNDU=</tprPwd><topUpSystem>CSG</topUpSystem><voucherSerialNumber></voucherSerialNumber><requestcts>02/03/2026 19:19:26.480</requestcts></request><transId>260302567574139</transId><ipaddress>10.82.0.8</ipaddress><vendorcode>VMS</vendorcode></estel>
+
+digi_21_core.log:2026-03-02 19:19:26,603 - INFO - |260302567574139| reqStr for Moderator :  <estel><header><requestType>TOPUP</requestType></header><request><tprInstanceName>VMS</tprInstanceName><channelId>24</channelId><msisdn>60133715294</msisdn><transId>260302567574139</transId><amount>10.0</amount><vendorcode>DTE</vendorcode><referenceTransId>UMB20260302191926900008</referenceTransId><channelName>UMB</channelName><serialNumber>31250304211202039628</serialNumber><faceValue>10.00</faceValue><productCategoryCode>902</productCategoryCode><topUpSystem>DTE</topUpSystem><operatorErpCode>100006000</operatorErpCode></request></estel>
+
+digi_21_core.log:2026-03-02 19:19:26,746 - INFO - |260302567574139|  Response from Moderator : <estel><header><responseType>TOPUP</responseType></header><response><transId>260302567574139</transId><requestcts>2026-03-02 19:19:26.606</requestcts><responsects></responsects><resultCode>0</resultCode><resultCodeDesc>Transaction Successful</resultCodeDesc><jsonData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}]]></jsonData><mainBalanceAmount>28.65</mainBalanceAmount></response></estel>
+
+digi_21_splunk.log:2026-03-02 19:19:26.485|2026-03-02 19:19:26.871|digi_21|260302567574139|TOPUP|0000|Transaction Successful|0|||10.82.0.8|UMB20260302191926900008|31250304211202039628||24|60133715294|10.00|386|300|1|SYSTEM|
+
+[t1-ops-v6970@shtvvmsnapppr02 coreengine]$
+
+ ===========================================================================================================================
+ 
+ Interface- Modeengne
+ 
+ 
+ 
+ [t1-ops-v6970@shtvvmsnvispr01 logs]$ grep UMB20260302191926900008 ../../engine/modengine/*.log
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,605 -[260302567574139] INFO  - Client Request : ocket[addr=/10.82.0.8,port=46764,localport=8102]]<estel><header><requestType>TOPUP</requestType></header><request><tprInstanceme>VMS</tprInstanceName><channelId>24</channelId><msisdn>60133715294</msisdn><transId>260302567574139</transId><amount>10.0</aunt><vendorcode>DTE</vendorcode><referenceTransId>UMB20260302191926900008</referenceTransId><channelName>UMB</channelName><serlNumber>31250304211202039628</serialNumber><faceValue>10.00</faceValue><productCategoryCode>902</productCategoryCode><topUpSysm>DTE</topUpSystem><operatorErpCode>100006000</operatorErpCode></request></estel>
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::data  send  tote :::: {"id":"260302567574139","paymentRef":{"id":"UMB20260302191926900008"},"channel":{"id":"24","name":"UMB"},"logicalResoue":{"@type":"MSISDN","value":"60133715294"},"rechargeType":"902","rechargeMethod":"Voucher","amount":{"value":10.0,"unit":"RM""requestor":{"id":123,"name":"VMS SN 31250304211202039628, Recharge Value RM10.00","role":"","msisdn":""},"productOfferingId":,"adjustmentCode":"","paymentMethod":{"id":"260302567574139","@type":"Voucher","code":"31250304211202039628"},"description":"V"}
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,606 -[260302567574139] INFO  -  Header X-RequestD UMB20260302191926900008 Header X-BE-ID 100006000
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::rponse from dteRecharge api::::::::::::::::::{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"imptedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName"C_MAIN_ACCOUNT"}]}]}
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - :::::::::::::respse from dteRecharge :::::::::::::::{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBucks":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_COUNT"}]}]}
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Response From Modator : <estel><header><responseType>TOPUP</responseType></header><response><transId>260302567574139</transId><requestcts>2026--02 19:19:26.606</requestcts><responsects></responsects><resultCode>0</resultCode><resultCodeDesc>Transaction Successful</resuCodeDesc><jsonData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{ame":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT]}]}]]></jsonData><mainBalanceAmount>28.65</mainBalanceAmount></response></estel>
+../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Response  : <este<header><responseType>TOPUP</responseType></header><response><transId>260302567574139</transId><requestcts>2026-03-02 19:19:2606</requestcts><responsects></responsects><resultCode>0</resultCode><resultCodeDesc>Transaction Successful</resultCodeDesc><jsData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}]]></jsoata><mainBalanceAmount>28.65</mainBalanceAmount></response></estel>
+../../engine/modengine/digi_12_splunk_20260302_2.log:reqStart:2026-03-02 19:19:26.606|respRecv:2026-03-02 19:19:26.746|modTime40|tokenReqStart:2026-03-02 19:19:26.606|tokenRespRecv:2026-03-02 19:19:26.606|tokenTime:0|refillReqStart:2026-03-02 19:19:26.6|refillRespRecv:2026-03-02 19:19:26.746|refillTime:140|vmsTxnId:260302567574139|refTransID:UMB20260302191926900008|serialNo:350304211202039628|customerNo:60133715294|transType:TOPUP|resultCode:0|resultDesc:Transaction Successful|
+[t1-ops-v6970@shtvvmsnvispr01 logs]$
+===================================================================================================================================
+
+Ref to take 
+
+[t1-ops-v6970@shtvvmsnvispr01 ~]$ grep -i 260302567574139  /applogs/engine/modengine/digi_12_moderator_20260302_27.log
+
+02 Mar 2026 19:19:26,605 -[260302567574139] INFO  - Client Request : [Socket[addr=/10.82.0.8,port=46764,localport=8102]]<estel><header><requestType>TOPUP</requestType></header><request><tprInstanceName>VMS</tprInstanceName><channelId>24</channelId><msisdn>60133715294</msisdn><transId>260302567574139</transId><amount>10.0</amount><vendorcode>DTE</vendorcode><referenceTransId>UMB20260302191926900008</referenceTransId><channelName>UMB</channelName><serialNumber>31250304211202039628</serialNumber><faceValue>10.00</faceValue><productCategoryCode>902</productCategoryCode><topUpSystem>DTE</topUpSystem><operatorErpCode>100006000</operatorErpCode></request></estel>
+02 Mar 2026 19:19:26,605 -[260302567574139] INFO  - Setting Adapter................................ dteTopUpBalanceProcessor
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - ::::::::::::dummy is false:::::::::::
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::::::::::::: Start callDte Method :::::::::::
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::::::::::::DTE json :::::::::::::::::
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  -  Channel Name 24 channelId 24
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - ::Starting Dte Token Request::
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::::TopUpDteRequestProcessor .......... existing dteAccessToken
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :DTE Token Status:true
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  -  dteRecharge Url https://api.prod.dte.aws.celcomdigi.com/mw/prepaybalancemgmt-topupbalance-recharge/prepaybalancemanagement/v4/topupbalance/recharge dteRecharge TimeOut 30000
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::data  send  to dte :::: {"id":"260302567574139","paymentRef":{"id":"UMB20260302191926900008"},"channel":{"id":"24","name":"UMB"},"logicalResource":{"@type":"MSISDN","value":"60133715294"},"rechargeType":"902","rechargeMethod":"Voucher","amount":{"value":10.0,"unit":"RM"},"requestor":{"id":123,"name":"VMS SN 31250304211202039628, Recharge Value RM10.00","role":"","msisdn":""},"productOfferingId":"","adjustmentCode":"","paymentMethod":{"id":"260302567574139","@type":"Voucher","code":"31250304211202039628"},"description":"VMS"}
+02 Mar 2026 19:19:26,606 -[260302567574139] INFO  -  Header X-Request-ID UMB20260302191926900008 Header X-BE-ID 100006000
+02 Mar 2026 19:19:26,745 -[260302567574139] INFO  - :::::::response code return from dte :::::: 200...
+02 Mar 2026 19:19:26,745 -[260302567574139] INFO  - :::::::success:::::::::200
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::response from dteRecharge api::::::::::::::::::{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - :::::::::::::response from dteRecharge :::::::::::::::{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::generateResponse:::::::::::::::
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::Start TopUp generateResponse:::::::::::::::
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::End TopUp generateResponse:::::::::::::::
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - ::::::::::::::::buildResponse:::::::::::::::
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Response From Moderator : <estel><header><responseType>TOPUP</responseType></header><response><transId>260302567574139</transId><requestcts>2026-03-02 19:19:26.606</requestcts><responsects></responsects><resultCode>0</resultCode><resultCodeDesc>Transaction Successful</resultCodeDesc><jsonData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}]]></jsonData><mainBalanceAmount>28.65</mainBalanceAmount></response></estel>
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Moderator Response mapped transid................................260302567574139
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Moderator Response mapped transid................................260302567574139
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  - Response  : <estel><header><responseType>TOPUP</responseType></header><response><transId>260302567574139</transId><requestcts>2026-03-02 19:19:26.606</requestcts><responsects></responsects><resultCode>0</resultCode><resultCodeDesc>Transaction Successful</resultCodeDesc><jsonData><![CDATA[{"id":"UMB20260302191926900008","paymentRef":{"id":"UMB20260302191926900008"},"impactedBuckets":[{"name":"MAIN_BUCKET","item":[{"remainingValue":{"amount":"28.65","unit":"MYR"},"product":{},"remainingValueName":"C_MAIN_ACCOUNT"}]}]}]]></jsonData><mainBalanceAmount>28.65</mainBalanceAmount></response></estel>
+02 Mar 2026 19:19:26,746 -[260302567574139] INFO  -  :: splunk set  :
+[t1-ops-v6970@shtvvmsnvispr01 ~]$
+
+
+
+
