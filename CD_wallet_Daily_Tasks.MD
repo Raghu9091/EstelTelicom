@@ -1,18 +1,14 @@
 1. cash Ref ID :- PO260303174613451
 
-https://cdwalletadmin.celcomdigi.com
 
-IWP   https://cdwalletadmin.celcomdigi.com/#/feature/search/search-transaction
+
+IWP  https://cdwalletadmin.celcomdigi.com
 
 DWP  https://cdwallet.celcomdigi.com:8443
 
 
 
 
-Every one using DB credentials
-================================
-User: db_readonly
-Password: D6L1@202b#!
 
 2. Blockout Flag reset issue?
 =================================================
@@ -41,7 +37,7 @@ hostname;date;w;uptime;df -h; fre -h;modengine_dd -l; service nginx satus; ps -e
 ```
 2. APP-01/02/03
 ```
-hostname;date;w;uptime;df -h; fre -h;coreengine_dd -l;
+hostname;date;w;uptime;df -kh; fre -gh;coreengine_dd -l;for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler;do echo "=====  $R  ======="
 ```
 3. MIS-APP
 ```
@@ -49,7 +45,7 @@ date;w;df -h;free -h; systemctl status redis
 ```
 4. Web:- 01/02
 ```
-date;df -h; free -h;w;systemctl status nginx;
+w;date;df -h; free -h;w;systemctl status nginx;
 ```
 
 5. DB:- 01/02
@@ -62,3 +58,13 @@ date;df -h;free -h;w;hostname;ps -ef | grep walsender
 ```
 w;hostname;date;date;free -h; df -h
 ```
+
+
+** APP server Checking status commands Services
+/opt/estel/scripts/coreengine_dd -l
+/opt/estel/scripts/ErefillAuth status
+
+/opt/estel/scripts/ErefillRest status
+/opt/estel/scripts/ErefillRest_DWP status
+
+
