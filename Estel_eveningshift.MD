@@ -1,3 +1,13 @@
+#Error codes
+```
+10- generated 
+11- activate 
+12- used 
+13- locked
+14- permanently locked
+15- Reserved
+16- expired
+```
 
 # Evening Shift
 Every 30 min check

@@ -2,6 +2,16 @@
 
 
 
+
+2.hypercare ticket MONITORING
+3.hourly monitoring error
+
+L1. Monitoring:
+================
+
+
+
+
 IWP  https://cdwalletadmin.celcomdigi.com
 
 DWP  https://cdwallet.celcomdigi.com:8443
@@ -37,7 +47,9 @@ hostname;date;w;uptime;df -h; fre -h;modengine_dd -l; service nginx satus; ps -e
 ```
 2. APP-01/02/03
 ```
-hostname;date;w;uptime;df -kh; fre -gh;coreengine_dd -l;for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler;do echo "=====  $R  ======="
+hostname;date;w;uptime;df -kh; fre -gh;coreengine_dd -l;for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "=====  $R ======="; $R status; done
+
+df -h ;free -h ;hostname ;w;date;coreengine_dd -l;for s in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "===== $s ====="; $s status; done
 ```
 3. MIS-APP
 ```
@@ -51,6 +63,8 @@ w;date;df -h; free -h;w;systemctl status nginx;
 5. DB:- 01/02
 ```
 date;df -h;free -h;w;hostname;ps -ef | grep walsender
+(or)
+date;df -h;free -h;w;hostname;ps -ef | grep -i receiver
 ```
 
 6. MIS DB:
