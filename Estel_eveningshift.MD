@@ -47,6 +47,7 @@ GROUP BY b.description
 ORDER BY b.description;
 ```
 
+# Generation and activation voucher count of VMS softpin.
 
 STEP 5 : Generation and activation voucher count of VMS softpin.
 Action: Check the generation and activation voucher count for VMS softpin using the query below on MIS DB (172.27.128.7):
@@ -71,8 +72,7 @@ GROUP BY 1, 2, 3;
 ```
 
 
-##Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
-=============================================================
+# Resource Monitoring Prod, Pre-prod (Shared to whatsapp)
 
 05:30
 
@@ -102,14 +102,20 @@ df -h ; free -h ;date ;top
 ```
 	
 =========================================================================================
-# DB Replication Monitoring
+
+# DB Replication Monitoring APP 1(Primary)
 
 ``` 
 ps -ef | grep walsender
 ```
+(or)DB 02 replicate below 
+```
+ps -ef | grep -i receiver
+```
 
 
-### Check report generation/activation on below mount point (App1/App2/MISAPP)
+# Check report generation/activation on below mount point (App1/App2/MISAPP)
+
 5:45
 ```
 cd /data/outbound/erp/activation_response/new;ls -lrth |wc -l
