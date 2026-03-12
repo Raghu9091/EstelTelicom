@@ -86,6 +86,15 @@ WHERE user_code IN (
 -- 5= active, 6= inactive
 select  user_first_name ,user_code, status_id from vms_user_profile where user_code ='V17565X';
 
+
+===================================================
+-- product type hard =6 soft=5
+select * from vms_voucher limit 1; -- final table
+
+select * from vms_transaction limit 10;
+
+====================================================
+
 -- single user check
 select user_code,trans_id,trans_type_code,value,channel_code,product_code, voucher_serial_number,comments,transaction_cts 
 from vms_transaction where user_code ='V18155X';
@@ -104,4 +113,5 @@ ORDER BY t.transaction_ctc DESC;
 
 
 
-====================================================================
+=======================================================================
+
