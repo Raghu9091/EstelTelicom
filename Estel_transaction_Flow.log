@@ -36,7 +36,6 @@ digi_21_splunk.log:2026-03-02 19:19:26.485|2026-03-02 19:19:26.871|digi_21|26030
  Interface- Modeengne
  
  
- 
  [t1-ops-v6970@shtvvmsnvispr01 logs]$ grep UMB20260302191926900008 ../../engine/modengine/*.log
 ../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,605 -[260302567574139] INFO  - Client Request : ocket[addr=/10.82.0.8,port=46764,localport=8102]]<estel><header><requestType>TOPUP</requestType></header><request><tprInstanceme>VMS</tprInstanceName><channelId>24</channelId><msisdn>60133715294</msisdn><transId>260302567574139</transId><amount>10.0</aunt><vendorcode>DTE</vendorcode><referenceTransId>UMB20260302191926900008</referenceTransId><channelName>UMB</channelName><serlNumber>31250304211202039628</serialNumber><faceValue>10.00</faceValue><productCategoryCode>902</productCategoryCode><topUpSysm>DTE</topUpSystem><operatorErpCode>100006000</operatorErpCode></request></estel>
 ../../engine/modengine/digi_12_moderator_20260302_27.log:02 Mar 2026 19:19:26,606 -[260302567574139] INFO  - :::data  send  tote :::: {"id":"260302567574139","paymentRef":{"id":"UMB20260302191926900008"},"channel":{"id":"24","name":"UMB"},"logicalResoue":{"@type":"MSISDN","value":"60133715294"},"rechargeType":"902","rechargeMethod":"Voucher","amount":{"value":10.0,"unit":"RM""requestor":{"id":123,"name":"VMS SN 31250304211202039628, Recharge Value RM10.00","role":"","msisdn":""},"productOfferingId":,"adjustmentCode":"","paymentMethod":{"id":"260302567574139","@type":"Voucher","code":"31250304211202039628"},"description":"V"}

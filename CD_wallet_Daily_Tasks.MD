@@ -1,23 +1,14 @@
 1. cash Ref ID :- PO260303174613451
-
-
-
-
 2.hypercare ticket MONITORING
 3.hourly monitoring error
+4.datadog monitoring
+
 
 L1. Monitoring:
 ================
 
-
-
-
 IWP  https://cdwalletadmin.celcomdigi.com
-
 DWP  https://cdwallet.celcomdigi.com:8443
-
-
-
 
 
 2. Blockout Flag reset issue?
@@ -36,33 +27,39 @@ DMSPO260303175924521
 After the Wallet top-up blackout scenario disabled, it got success
 How do we settle them ?
 ==============================================
+!! mail
 
 
 CDWALLET
 Performance MONITORING
 
+
 1. INT-01/02/03
 ```
-hostname;date;w;uptime;df -h; fre -h;modengine_dd -l; service nginx satus; ps -ef|grep -i apache
+hostname;date;w;uptime;df -h; free -h;modengine_dd -l; systemctl status nginx ; ps -ef|grep -i apache
 ```
 2. APP-01/02/03
 ```
-hostname;date;w;uptime;df -kh; fre -gh;coreengine_dd -l;for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "=====  $R ======="; $R status; done
+hostname;date;w;uptime;df -kh;free -gh;coreengine_dd -l;for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "=====  $R ======="; $R status; done
 
 df -h ;free -h ;hostname ;w;date;coreengine_dd -l;for s in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "===== $s ====="; $s status; done
 ```
+Pre-prod
+hostname;date;w;uptime;df -kh;free -gh;coreengine -l; for R in ErefillAuth ErefillRest ErefillRest_DWP ErefillScheduler; do echo "=====  $R ======="; $R status; done
+
 3. MIS-APP
 ```
-date;w;df -h;free -h; systemctl status redis
+hostname;date;w;df -h;free -h; systemctl status redis;ErefillReport status
 ```
 4. Web:- 01/02
 ```
-w;date;df -h; free -h;w;systemctl status nginx;
+hostname;w;date;df -h; free -h; systemctl status nginx;
 ```
 
 5. DB:- 01/02
 ```
-date;df -h;free -h;w;hostname;ps -ef | grep walsender
+
+hostname;w;date;df -h;free -h;w;ps -ef | grep walsender
 (or)
 date;df -h;free -h;w;hostname;ps -ef | grep -i receiver
 ```
@@ -70,15 +67,25 @@ date;df -h;free -h;w;hostname;ps -ef | grep -i receiver
 6. MIS DB:
 
 ```
-w;hostname;date;date;free -h; df -h
+hostname;date;w;free -h; df -h
 ```
 
+satish.bandi@inforientasia.com
+cd /applogs/engine/coreengine/ && grep -aRH 100939277 erefill_*_splunk*.log
+cd /applogs/engine/coreengine/ && grep -aiRH "Transaction Not Found" erefill_*_splunk*.log
+** APP server Checking status commands Services(Cyber Arc)
 
-** APP server Checking status commands Services
 /opt/estel/scripts/coreengine_dd -l
 /opt/estel/scripts/ErefillAuth status
-
 /opt/estel/scripts/ErefillRest status
 /opt/estel/scripts/ErefillRest_DWP status
+
+# EFM throug cluster status:- shtvdwsdbapppro2 --(MIS-DB)
+check date and uptime if somebody will ask.
+
+```
+/user/edb/efm-4.8/bin/efm cluster-status efm
+```
+
 
 

@@ -128,7 +128,7 @@ cd /data/outbound/erp/generation_response/new;ls -lrth |wc -l
 ```
 
 
-4.VMS batch_schedular(MIS app)
+4. VMS batch_schedular(MIS app)
 
 ```
 VMSBatchScheduler_digi_qa status
@@ -153,6 +153,7 @@ tail -f /applogs/DIGVIJAY/VMS/PROCESS/Archive_Table_Report_$(date +%F).csv
 
 
 ######## localhost_access_log.2026-02-25.txt ########
+
 8:00-8:30
 ** Need to check Tomcat request status count on on Web1/2 and Int 1 /2 server
 
@@ -195,9 +196,11 @@ grep -i "Time out" digi_*_splunk.log
 ```
 - cat digi_*_splunk_20231224_*.log| grep -i "Timed Out" ( Change date )
 
-####Shift Once MS DB TPS
+## Shift Once MS DB TPS (Change Date)
 
+```
 select to_char(request_cts,'mm/dd/yyyy hh24:mi:ss AM') as date ,count(*) as TPS from vms_transaction where request_cts >= TO_TIMESTAMP('25/02/2026 00:00:00','DD/MM/YYYY HH24:MI:SS') and request_cts <= TO_TIMESTAMP('25/02/2026 23:59:59','DD/MM/YYYY HH24:MI:SS')group by 1 having count(*) >30;
+```
 
 ## below mount points check app1
 
@@ -250,6 +253,7 @@ HAVING COUNT(reference_transaction_id) > 1;
 ```
 
 ========================================
+
 ##Reconcillation (change_date)
 ```
 SELECT 
@@ -261,7 +265,7 @@ SELECT
     recon_result_desc, 
     is_settled 
 FROM vms_trans_reconciliation 
-WHERE DATE(recharge_date) >= '2026-02-06' 
+WHERE DATE(recharge_date) >= '2026-03-14' 
 ORDER BY recharge_date DESC;
 ```
 
@@ -300,19 +304,19 @@ having count(*) >19;
 
 ```
 
+
+
 # log
 
-
-* Search the below path log transaction 
+** Search the below path log transaction 
 Logs Path
 1. Tomcat /applogs/tomcat/logs/
 2. Mod /applogs/engine/modengine/
 3. Core /applogs/engine/coreengine 
 
 ```
-grep -i "Transaction_ID" *.log
+grep -aiH "Transaction_ID" *.log
 ```
-
 
 =======================
 
@@ -322,17 +326,22 @@ grep -i "Transaction_ID" *.log
 SELECT CURRENT_DATABASE();
 ```
 
+\d --> all tables list showing
+\x ---> showing the tables chane the quary o/p records colums to rows than rows to colums 
+\t ---> tuple colum names on/off 
+
 
 ====================================================## 9:30 ## ==========
 
-# Weekly_sheets update
+# Weekly_sheets update After 9:30
 
 1. Archival report 
 ```
 tail -f /applogs/DIGVIJAY/VMS/PROCESS/Archive_Table_Report_$(date +%F).csv
 ```
 2. Reconcillation (outlook-Mail)
-3. TPS--int01/02 
+
+3. TPS--int01/02 (Changedate)
 ```
 cd /applogs/tomcat/logs && ls -lrt
 grep 'Request receive in Rest Service TOPUP' catalina.out_$(date +%F) | cut -d ',' -f1 | sort | uniq -c | sort -nr | head -5
@@ -347,9 +356,8 @@ grep 'Request receive in Rest Service TOPUP' catalina.out_2026-03-02 | cut -d ',
 select used_date,uvc_vms,sum(count) count 
 from (select date(recharge_date) used_date, case when generation_method_id in (1,2) then 'VMS' when generation_method_id in (3,4) then 'UVC' end UVC_VMS, count(*) from vms_voucher where current_status_id= '12' and date(recharge_date) >= '2026-02-25' group by 1, generation_method_id) group by 1,2 order by 1;
 ```
-
-
 5. Digicelicom evg report
+
 6. Transaction SLA
 
 ## Weekly SHEET ARCHIVAL report(MIS-APP)
