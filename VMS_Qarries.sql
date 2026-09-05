@@ -1,7 +1,7 @@
 -- TABLES
 	*vms_Channel
 	*vms_oparator
-	*vms_product --> Erp codes checlk
+	*vms_product --> Erp codes checlk = meterial code
 	*vms_product_category --> Softpin or hard pin check
 	*vms_transaction
 	*vms_voucher
@@ -49,12 +49,16 @@ having count(*) >12;
 
 =========================================================================================================================
 
---3. user_profile active or inactive checking quary.(internal_Portal also check)
+--3. user_profile active or inactive checking quary.(internal_Portal also check) (5=active 6= Inactive 4= delete)
 
 SELECT user_code, user_first_name, status_id
 FROM vms_user_profile
 WHERE user_code IN (
-'V18777X');
+'04853',
+'V23107X'
+);
+
+
 
 =====================================================
 -- Application users checking  EWP 
@@ -120,7 +124,7 @@ ORDER BY t.transaction_ctc DESC;
 -- whatsapp lock the vouchern then ask id status, checking  (Reason_ID check below quary)
 
 select * from vms_voucher_status_change 
-where id in (select voucher_status_change_id from vms_voucher_status_change_detail where from_serial_number ='33580006311400354043');
+where id in (select voucher_status_change_id from vms_voucher_status_change_detail where from_serial_number ='10001657129800000209');
 
 -
 - Anjali:- voucher status check (lock/active/genarate) --> updating vocher 15 min taking time for updating 
@@ -164,7 +168,7 @@ mail : RE:  Transactions went into reconciliation 16-May
     is_settled,
     COUNT(*)
 FROM vms_trans_reconciliation
-WHERE DATE(request_cts) = '2026-06-02'
+WHERE DATE(request_cts) = '2026-08-10'
 GROUP BY 1;
 
  is_settled | count
@@ -177,7 +181,7 @@ GROUP BY 1;
 
 SELECT CASE WHEN optional1 IN (100006000, 101006000) THEN 'Xc' WHEN optional1 = 102 THEN 'Xd' END AS optional_label, is_settled, COUNT(*) AS count
 FROM vms_trans_reconciliation a JOIN vms_voucher b ON a.serial_number = b.serial_number JOIN vms_status c ON b.current_status_id = c.id 
-WHERE date(a.recharge_date) = '2026-06-02' AND optional1 IN (102, 100006000, 101006000) GROUP BY optional_label, is_settled ORDER BY optional_label, is_settled;
+WHERE date(a.recharge_date) = '2026-08-10' AND optional1 IN (102, 100006000, 101006000) GROUP BY optional_label, is_settled ORDER BY optional_label, is_settled;
  optional_label | is_settled | count
 ----------------+------------+-------
  Xc             | F          |    36
@@ -190,7 +194,146 @@ WHERE date(a.recharge_date) = '2026-06-02' AND optional1 IN (102, 100006000, 101
 -- time
 Select serial_number,reference_transaction_id,recharge_date,recharge_by,trans_id,recon_result_desc,is_settled 
 from vms_trans_reconciliation 
-where date(recharge_date)>='2026-05-31' 
+where date(recharge_date)>='2026-08-10' 
 order by 3 desc;
 
 --------------------------------------------------------
+
+select serial_number,current_status_id,previous_status_id,last_modify_date from vms_voucher where current_status_id = 15 order by 4;
+    serial_number     | current_status_id | previous_status_id |     last_modify_date
+----------------------+-------------------+--------------------+---------------------------
+ 36012810111401644368 |                15 |                 15 | 02-JUN-26 03:00:02.124231
+ 33580006111400901025 |                15 |                 15 | 02-JUN-26 03:45:01.016999
+
+
+====================
+2200
+
+select usr.id,usr.profile_id,usr.user_code,usrProfile.allowed_api,usr.status_id, usrProfile.effective_from,usrProfile.effective_to,usrProfile.channel_id  from vms_user  usr  LEFT JOIN  vms_user_profile  usrProfile on usrProfile.id = usr.profile_id  LEFT JOIN  vms_status  status on status.id = usr.status_id  LEFT JOIN  vms_status_type  statusType on statusType.id = status.status_type_id  LEFT JOIN  vms_channel  channel on channel.id = usrProfile.channel_id  where  usr.user_code = 'csg30' and  usr.password = 'C98163DB94D638C807719D51AC20DC4C' and  channel.channel_code  not in ('IWP','EWP') and  status.code='A' and statusType.status_type_code='COMMON' and  'Thu Jun 25 18:00:25 MYT 2026'  >= usrProfile.effective_from and  CASE WHEN usrProfile.effective_to is not null THEN  'Thu Jun 25 18:00:25 MYT 2026' <= usrProfile.effective_to ELSE 1=1 END
+
+=================================================================
+
+-- VMS users not logine more than 60 days (Anjali provided , Rahul has validated this quary, florence lee need action)
+SELECT
+    u.user_code,
+    u.user_first_name,
+    s.description AS user_status,
+    MAX(t.transaction_cts) AS last_login_date
+FROM vms_user_profile u
+JOIN vms_status s
+    ON u.status_id = s.id
+JOIN vms_transaction t
+    ON u.user_code = t.user_code
+    AND t.trans_type_code = 'LOGIN'
+WHERE s.description = 'Active'
+GROUP BY
+    u.user_code,
+    u.user_first_name,
+    s.description
+HAVING
+    MAX(t.transaction_cts) < CURRENT_DATE - INTERVAL '60 days'
+ORDER BY last_login_date;
+
+
+ -- more never VMS logged in users list
+ 
+ \copy ( SELECT     u.user_code,     u.user_first_name,     s.description AS user_status,     MAX(t.transaction_cts) AS last_login_date,     CASE         WHEN MAX(t.transaction_cts) IS NULL THEN 'Never Logged In'         ELSE FLOOR(EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - MAX(t.transaction_cts))) / 86400)::text || ' days'     END AS inactive_days FROM vms_user_profile u JOIN vms_status s     ON u.status_id = s.id LEFT JOIN vms_transaction t     ON u.user_code = t.user_code    AND t.trans_type_code = 'LOGIN' WHERE s.description = 'Active' GROUP BY     u.user_code,     u.user_first_name,     s.description HAVING     MAX(t.transaction_cts) IS NULL     OR MAX(t.transaction_cts) < CURRENT_DATE - INTERVAL '60 days' ORDER BY     last_login_date NULLS FIRST ) TO '/tmp/04July_usernever_logged_in.csv' WITH CSV HEADER;
+
+========================================================================
+-- Reconsile
+
+SELECT 
+    serial_number, 
+    reference_transaction_id, 
+    recharge_date, 
+    recharge_by, 
+    trans_id, 
+    recon_result_desc, 
+    is_settled 
+FROM vms_trans_reconciliation 
+WHERE DATE(recharge_date) >= '2026-07-30' 
+ORDER BY recharge_date DESC;
+
+-- Reserve status: (Anjali) Generated 
+
+SELECT
+    t.voucher_serial_number,
+    t.transaction_cts,
+    t.result_code,
+    v.current_status_id,
+    s.description AS status
+FROM vms_transaction t
+LEFT JOIN vms_voucher v
+    ON t.voucher_serial_number = v.serial_number
+LEFT JOIN vms_status s
+    ON v.current_status_id = s.id
+WHERE t.result_code = '2200'
+  AND t.trans_type_code = 'TOPUP'
+  AND t.transaction_cts BETWEEN
+      TO_TIMESTAMP('2026-07-26 00:00:00.000','YYYY-MM-DD HH24:MI:SS.ms')
+      AND TO_TIMESTAMP('2026-07-26 23:59:59.999','YYYY-MM-DD HH24:MI:SS.ms')
+ORDER BY t.transaction_cts;
+
+
+
+select current_status_id,description,count(*)  from vms_voucher a,vms_status b where a.current_status_id=b.id and serial_number IN ('10296975110000042439') group by 1,2;
+
+
+
+Shreya using TABLES
+==========================
+vms_user_profile
+vms_order
+vms_order_detail
+vms_operator
+vms_order_batches
+vms_system_configuration
+vms_user
+vms_voucher_summary_report
+vms_master_lookup
+vms_face_value
+vms_status
+vms_voucher
+vms_product
+vms_product_category
+
+==========================
+
+-- VMS Channel wise traffic check (kamal)
+SELECT
+    DATE_TRUNC('hour', t.transaction_cts) AS transaction_hour,
+    c.channel_code,
+    c.channel_desc,
+    COUNT(*) AS transaction_count
+FROM vms_transaction t
+JOIN vms_channel c
+    ON t.channel_code = c.channel_code
+WHERE t.transaction_cts >= CURRENT_DATE
+GROUP BY
+    DATE_TRUNC('hour', t.transaction_cts),
+    c.channel_code,
+    c.channel_desc
+ORDER BY
+    transaction_hour DESC,
+    transaction_count DESC;
+
+-- Anjali Channel wiese check traffic
+SELECT
+    channel_code,
+    COUNT(*) AS total_transactions
+FROM vms_transaction
+WHERE transaction_cts >= TO_TIMESTAMP('25-JUL-2026 00:00:00', 'DD-MON-YYYY HH24:MI:SS')
+  AND transaction_cts <  TO_TIMESTAMP('25-JUL-2026 02:00:00', 'DD-MON-YYYY HH24:MI:SS')
+GROUP BY channel_code
+ORDER BY total_transactions DESC;
+
+--- VMS product Identified (SIT)----
+ SELECT
+    vv.serial_number,
+    vv.product_id,
+    vp.product_name
+FROM vms_voucher vv
+JOIN vms_product vp
+    ON vv.product_id = vp.id
+WHERE vv.serial_number = '20260670211200000001';
+

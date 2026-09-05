@@ -1,0 +1,30 @@
+CREATE TABLE IBM (
+    Emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    Emp_name VARCHAR(255),
+    Department VARCHAR(255),
+    Country VARCHAR(255)
+);
+
+INSERT INTO IBM (Emp_name, Department, Country)
+VALUES
+    ('suresh', 'IT', 'India'),
+    ('Raghu', 'IT', 'Russia'),
+    ('Mahi', 'Transport', 'Singapore'),
+    ('Ganga', 'IT', 'Pakistan'),
+    ('Ananth', 'IT', 'China'),
+    ('Geetha', 'HR', 'India'),
+    ('Naini', 'HR', 'India'),
+    ('Ravi', 'IT', 'China'),
+    ('Hari', 'Non_IT', 'Russia');
+	
+==============================
+
+To Grant the permissions to user raghu:
+REVOKE ALL PRIVILEGES ON *.* TO 'raghu'@'localhost' WITH GRANT OPTION;
+GRANT CREATE ON *.* TO 'raghu'@'localhost';
+FLUSH PRIVILEGES;
+
+To Cancel or Revoke the permissions to same user:
+REVOKE CREATE ON *.* FROM 'raghu'@'localhost';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'raghu'@'localhost';
+FLUSH PRIVILEGES;

@@ -67,7 +67,7 @@ date;df -h;free -h;w;hostname;ps -ef | grep -i receiver
 6. MIS DB:
 
 ```
-hostname;date;w;free -h; df -h
+hostname;date;w;free -h; df -h;Ere
 ```
 
 satish.bandi@inforientasia.com
@@ -89,3 +89,14 @@ check date and uptime if somebody will ask.
 
 
 
+# CR16671
+
+select transaction_result_desc, count(*) from transaction where transaction_ctc BETWEEN '2026-06-05 00:00:00' AND '2026-06-05 23:59:59' group by 1 order by 2 desc;
+ 
+select transaction_result_desc, count(*) from transaction where transaction_api_code='WALLETTOPUP' and transaction_ctc 
+BETWEEN '2026-06-05 00:00:00' AND '2026-06-05 23:59:59' group by 1 order by 2 desc;
+
+
+==========================
+DB tasks check (primary, secondery, witness)
+ /usr/edb/efm-4.8/bin/efm cluster-status efm  # view the status info
