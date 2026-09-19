@@ -9,9 +9,10 @@ Select * FROM api;
 
 
 -- ledger
-SELECT * FROM ledger 1 where 1_serial_no='1'
+SELECT * FROM ledger 1 where 1_serial_no='1' -- is transaction number
 
-
+-- all active users and ROLES
+select suser_loginname,suser_firstname,suser_lastname,suser_profile_type_code,suser_activationdate,suser_role_code from suser where suser_user_type ='I';
 
 
 
@@ -69,3 +70,43 @@ SELECT * FROM transaction;
 \o
 
 -- amount 
+
+
+
+
+
+============
+-- sukraj & sujay
+
+select * from profile where profile_passport_id ='WDS24966'
+ 
+ 
+select * from suser where suser_company_code ='DS002A1209' --suser_identity_id
+ 
+select * from suser where suser_identity_id = '369974'
+ 
+='90166131926' ---suser_identity_id
+ 
+select * from wallet where wallet_profile_id ='90166131926' ----1,main,2 Sales,3 Kiosk
+ 
+select * from transaction where transaction_from_code ='369974' order by "transaction".transaction_ctc  
+ 
+ 
+and transaction_ctc >='2026-03-14'
+and transaction_ctc <'2026-03-15'  order by transaction_ctc
+ 
+select * from ledger where l_serial_no   in ('101504931','101508429')
+ 
+='101504931'
+ 
+and transaction_amount ='293.20'
+ 
+where
+transaction_subsmsisdn ='60132963548'
+and transaction_ctc >='2026-03-20'
+and transaction_ctc <='2026-03-21'
+ 
+ 
+transaction_from_code = 'BSS10925' and transaction_ctc >='2026-03-20'
+and transaction_ctc <='2026-03-21' and transaction_amount  > 0 order by transaction_ctc
+ 
